@@ -75,6 +75,10 @@ contract Dex {
       }
       return _tokens;
     }
+
+    function faucet(address to, uint amount) external {
+        _mint(to, amount);
+    }
     
     function addToken(
         bytes32 ticker,
@@ -153,9 +157,9 @@ contract Dex {
             Order memory order = orders[i - 1];
             orders[i - 1] = orders[i];
             orders[i] = order;
-            i--;
+            i = i.sub(1);
         }
-        nextOrderId++;
+        nextOrderId = nextOrderId.add(1);
     }
     
     function createMarketOrder(
@@ -206,8 +210,8 @@ contract Dex {
                 traderBalances[orders[i].trader][ticker] = traderBalances[orders[i].trader][ticker].sub(matched);
                 traderBalances[orders[i].trader][DAI] = traderBalances[orders[i].trader][DAI].add(matched.mul(orders[i].price));
             }
-            nextTradeId++;
-            i++;
+            nextTradeId = nextTradeId.add(1);
+            i = i.add(1);
         }
         
         i = 0;
@@ -216,7 +220,7 @@ contract Dex {
                 orders[j] = orders[j + 1];
             }
             orders.pop();
-            i++;
+            i = i.add(1);
         }
     }
    
