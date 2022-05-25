@@ -1,7 +1,6 @@
 {
   "name": "dex",
   "version": "1.0.0",
-  "description": "",
   "main": "truffle-config.js",
   "directories": {
     "test": "test"
@@ -13,7 +12,8 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "@openzeppelin/contracts": "^4.6.0",
+    "@openzeppelin/contracts": "^2.5.1",
     "@openzeppelin/test-helpers": "^0.5.15"
-  }
+  },
+  "description": ""
 }

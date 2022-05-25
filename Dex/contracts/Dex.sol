@@ -1,8 +1,8 @@
-pragma solidity 0.6.3;
+pragma solidity 0.5.3;
 pragma experimental ABIEncoderV2;
 
-import 'https://github.com/OpenZeppelin/openzeppelin-contracts/blob/5dfe7215a9156465d550030eadc08770503b2b2f/contracts/token/ERC20/IERC20.sol';
-import 'https://github.com/OpenZeppelin/openzeppelin-contracts/blob/5dfe7215a9156465d550030eadc08770503b2b2f/contracts/math/SafeMath.sol';
+import '@openzeppelin/contracts/token/ERC20/IERC20.sol';
+import '@openzeppelin/contracts/math/SafeMath.sol';
 
 contract Dex {
 
@@ -74,10 +74,6 @@ contract Dex {
         );
       }
       return _tokens;
-    }
-
-    function faucet(address to, uint amount) external {
-        _mint(to, amount);
     }
     
     function addToken(
@@ -157,9 +153,9 @@ contract Dex {
             Order memory order = orders[i - 1];
             orders[i - 1] = orders[i];
             orders[i] = order;
-            i = i.sub(1);
+            i--;
         }
-        nextOrderId = nextOrderId.add(1);
+        nextOrderId++;
     }
     
     function createMarketOrder(
@@ -210,8 +206,8 @@ contract Dex {
                 traderBalances[orders[i].trader][ticker] = traderBalances[orders[i].trader][ticker].sub(matched);
                 traderBalances[orders[i].trader][DAI] = traderBalances[orders[i].trader][DAI].add(matched.mul(orders[i].price));
             }
-            nextTradeId = nextTradeId.add(1);
-            i = i.add(1);
+            nextTradeId++;
+            i++;
         }
         
         i = 0;
@@ -220,14 +216,14 @@ contract Dex {
                 orders[j] = orders[j + 1];
             }
             orders.pop();
-            i = i.add(1);
+            i++;
         }
     }
    
-   modifier tokenIsNotDai(bytes32 ticker) {
+    modifier tokenIsNotDai(bytes32 ticker) {
        require(ticker != DAI, 'cannot trade DAI');
        _;
-   }     
+    }     
     
     modifier tokenExist(bytes32 ticker) {
         require(
