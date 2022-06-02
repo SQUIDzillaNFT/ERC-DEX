@@ -52,6 +52,7 @@ contract('Dex', (accounts) => {
     );
   });
 
+
   it('should deposit tokens', async () => {
     const amount = web3.utils.toWei('100');
 
@@ -214,6 +215,8 @@ contract('Dex', (accounts) => {
     );
   });
 
+
+  
   it('should NOT create limit order if dai balance too low', async () => {
     await dex.deposit(
       web3.utils.toWei('99'),
